@@ -43,7 +43,7 @@ This project implements a **secure third-party payment micropayment system** for
 
 ### System Components | 系統元件
 
-| Component<br>元件 | English Description | 中文說明 |
+| Component<br> | English Description | 中文說明 |
 |------------------|---------------------|----------|
 | **Client** | A user-facing application that handles registration, login, account balance queries, online user list, and direct P2P transfers. Clients connect to the server for authentication and account updates, but perform transfers peer-to-peer. | 使用者端程式，負責註冊、登入、查詢餘額、取得線上清單，以及與其他 Client 直接進行轉帳。Client 連線至 Server 進行認證與帳戶更新，但轉帳時由雙方 Client 直接通訊。 |
 | **Server** | A multi-threaded server that accepts multiple client connections concurrently. It manages user registration, login, account balances, and the online user list. Each client connection is handled by a separate thread. Server does not relay messages between clients. | 多執行緒伺服器，可同時接受多個 Client 連線。負責使用者註冊、登入、帳戶餘額管理及線上清單維護。每個連線由獨立 thread 處理。Server 不替 Client 轉送訊息。 |
