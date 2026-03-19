@@ -33,21 +33,32 @@ g++ client.cpp -o client -lssl -lcrypto
 
 ---
 
-## 1. Project Overview
+## 1. Project Overview | 專案概述
 
-This project implements a secure third-party payment micropayment system for peer-to-peer transactions between users. The system consists of:
+### Overview | 系統簡介
 
-- **Client:** Handles user registration, login, account management, and peer-to-peer secure transfers
-- **Server:** Multi-threaded server for user management, authentication, and account handling
-- **Secure Communication:** All Client–Server and Client–Client communications are encrypted using OpenSSL
+This project implements a **secure third-party payment micropayment system** for peer-to-peer (P2P) transactions between users. The system follows a client–server architecture: a central server manages user accounts and authentication, while clients communicate directly with each other for transfers without relaying payment messages through the server. All communication—between clients and the server, and between clients—is encrypted. Encryption keys are negotiated between the two parties in each connection.
 
-### Main Features
+本專案實作一套**安全的第三方支付人際小額付款系統**，供使用者之間進行 P2P 轉帳。系統採用 Client–Server 架構：中央伺服器負責帳戶管理與認證，Client 之間則直接建立連線進行轉帳，不經由 Server 轉送付款訊息。Client 與 Server、Client 與 Client 之間的通訊皆經加密，每次連線時由通訊雙方協商加密金鑰。
 
-| Component | Functionality |
-|-----------|---------------|
-| **Client** | Register, login, request balance/online list, P2P transfer, notify logout |
-| **Server** | Accept connections, user registration, authentication, account management, online list |
-| **Security** | Encryption keys negotiated between communicating parties; OpenSSL for secure transmission |
+### System Components | 系統元件
+
+| Component<br>元件 | English Description | 中文說明 |
+|------------------|---------------------|----------|
+| **Client** | A user-facing application that handles registration, login, account balance queries, online user list, and direct P2P transfers. Clients connect to the server for authentication and account updates, but perform transfers peer-to-peer. | 使用者端程式，負責註冊、登入、查詢餘額、取得線上清單，以及與其他 Client 直接進行轉帳。Client 連線至 Server 進行認證與帳戶更新，但轉帳時由雙方 Client 直接通訊。 |
+| **Server** | A multi-threaded server that accepts multiple client connections concurrently. It manages user registration, login, account balances, and the online user list. Each client connection is handled by a separate thread. Server does not relay messages between clients. | 多執行緒伺服器，可同時接受多個 Client 連線。負責使用者註冊、登入、帳戶餘額管理及線上清單維護。每個連線由獨立 thread 處理。Server 不替 Client 轉送訊息。 |
+| **Secure Communication** | All communication uses OpenSSL for encryption. The encryption key (secret key) is negotiated between the two communicating parties. Client–Server and Client–Client channels are encrypted separately. | 所有通訊使用 OpenSSL 加密。加密金鑰由通訊雙方協定。Client–Server 與 Client–Client 的通道各自加密。 |
+
+### Main Features | 主要功能
+
+| Component<br>元件 | Functionality<br>功能 |
+|------------------|----------------------|
+| **Client** | Register, login, request balance/online list/public key, P2P transfer (direct), notify logout before exiting |
+| **Client** | 註冊、登入、請求餘額／線上清單／公鑰、P2P 轉帳（直接連線）、離開前通知 Server |
+| **Server** | Accept connections, user registration, authentication, send balance/online list/public key, receive logout notification |
+| **Server** | 接受連線、使用者註冊、認證、回傳餘額／線上清單／公鑰、接收離線通知 |
+| **Security** | Encryption keys negotiated per connection; OpenSSL for TLS/SSL |
+| **安全** | 每次連線協商金鑰；使用 OpenSSL 進行加解密 |
 
 ---
 
@@ -113,8 +124,6 @@ make clean
 ## 5. Execution
 
 ### Start the Server
-
-安裝openssl
 
 ```bash
 ./server <portNum> <Option>
