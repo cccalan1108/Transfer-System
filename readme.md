@@ -191,7 +191,7 @@ make clean
 
 | Phase | Content | Deadline |
 |-------|---------|----------|
-| Part 1 | Client-only (test with TA's Server) | Nov 17, 2024 |
+| Part 1 | Client-only  | Nov 17, 2024 |
 | Part 2 | Multi-threaded Server | Dec 1, 2024 |
 | Part 3 | Secure transmission (OpenSSL) | Dec 22, 2024 |
 
